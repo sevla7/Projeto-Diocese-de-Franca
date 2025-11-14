@@ -8,9 +8,9 @@ import java.util.List;
 
 public class FielDAO {
     // função para inserir um dev no banco de dados
-    public void inserir(String nome, String email, String paroquia) {
+    public void inserir(String nome, String email, String paroquia, String senha) {
         // monta uma string que representa o SQL
-        String sql = "INSERT INTO \"Fiel\" (\"Nome\",\"Email\",\"Paróquia\") VALUES (?,?,?)";
+        String sql = "INSERT INTO fiel (nome, email, paroquia, senha) VALUES (?,?,?,?)";
         try { // tenta inserir
             // conecta no banco de dados
             Connection conexao = ConnectionFactory.getConnection();
@@ -20,6 +20,7 @@ public class FielDAO {
             stmt.setString(1, nome);
             stmt.setString(2, email);
             stmt.setString(3, paroquia);
+            stmt.setString(4, senha);
             // executa a inserção no banco de dados
             stmt.executeUpdate();
             System.out.println("Fiel adicionado com sucesso!");
@@ -33,7 +34,7 @@ public class FielDAO {
         // cria a lista de fieis
         List<String> fieis = new ArrayList<>();
         // cria o SQL
-        String sql = "SELECT * FROM \"Fiel\"";
+        String sql = "SELECT * FROM fiel";
         try { // vamos tentar selecionar
             // abre a conexão
             Connection conexao = ConnectionFactory.getConnection();
@@ -43,20 +44,21 @@ public class FielDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 // adiciona id e nome na lista de fiéis
-                fieis.add(rs.getInt("ID_Fiel") + " - " +
-                        rs.getString("Nome") + " - " +
-                        rs.getString("Email") + " - " +
-                        rs.getString("Paróquia"));
+                fieis.add(rs.getInt("id_fiel") + " - " +
+                        rs.getString("nome") + " - " +
+                        rs.getString("email") + " - " +
+                        rs.getString("paroquia"));
             }
         } catch (SQLException e) { // tivemos um erro
-            System.out.println("Erro ao listar desenvolvedores!" + e.getMessage());
+            System.out.println("Erro ao listar fiéis " + e.getMessage());
         }
         return fieis; // retorna a lista de fieis
     }
 
-    public void atualizar(int id, String novoNome, String novoEmail, String novaParoquia) {
+    public void atualizar(int id, String novoNome, String novoEmail,
+                          String novaParoquia) {
         // monta o SQL
-        String sql = "UPDATE \"Fiel\" SET \"Nome\" = ?, \"Email\" = ?, \"Paróquia\" = ? WHERE \"ID_Fiel\" = ?"; // SQL corrigido
+        String sql = "UPDATE fiel SET nome = ?, email = ?, paroquia = ? WHERE id_fiel = ?"; // SQL corrigido
         // tenta atualizar o fiel
         try {
             // abre a conexão com o banco
@@ -81,7 +83,7 @@ public class FielDAO {
     }
 
     public void remover(int id) {
-        String sql = "DELETE FROM \"Fiel\" WHERE \"ID_Fiel\" = ?"; // Coluna corrigida
+        String sql = "DELETE FROM fiel WHERE id_fiel = ?"; // Coluna corrigida
         try {
             Connection conexao = ConnectionFactory.getConnection();
             PreparedStatement instrucao = conexao.prepareStatement(sql);

@@ -12,7 +12,7 @@ public class ConnectionFactory {
     // localhost -> máquina local
     // 5432 -> porta onde o postgres fica escutando requisição
     // Diocese Franca -> nome do banco de dados
-        static String URL = "jdbc:postgresql://localhost:5432/Diocese Franca";
+        static String URL = "jdbc:postgresql://localhost:5432/DioceseFranca";
     static String USER = "postgres";
     static String PASSWORD = "123";
 
