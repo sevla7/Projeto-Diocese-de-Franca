@@ -27,8 +27,13 @@ public class ChamadoDAO {
             if (data_fechamento == null || data_fechamento.isEmpty()) {
                 stmt.setNull(8, java.sql.Types.DATE);
             } else {
-                stmt.setString(8, data_fechamento);
-            }
+                if (data_fechamento == null || data_fechamento.isEmpty()) {
+    stmt.setNull(8, Types.DATE);
+} else {
+    LocalDate data = LocalDate.parse(data_fechamento, 
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    stmt.setDate(8, java.sql.Date.valueOf(data));
+}
 
             stmt.executeUpdate();
             System.out.println("Chamado feito com sucesso!");
