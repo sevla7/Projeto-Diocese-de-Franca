@@ -25,9 +25,6 @@ public class ChamadoDAO {
 
             // permite data_fechamento vazia
             if (data_fechamento == null || data_fechamento.isEmpty()) {
-                stmt.setNull(8, java.sql.Types.DATE);
-            } else {
-                if (data_fechamento == null || data_fechamento.isEmpty()) {
     stmt.setNull(8, Types.DATE);
 } else {
     LocalDate data = LocalDate.parse(data_fechamento, 
